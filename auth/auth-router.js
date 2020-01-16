@@ -15,6 +15,20 @@ router.post("/register", async (req, res, next) => {
 
 router.post("/login", async (req, res, next) => {
   try {
+    const { username, password } = req.body;
+    const user = await usersModel.getBy({ username }).first();
+    const passwordValid = await bcrypt.compare(password, user.password);
+
+    if (user && passwordValid) {
+      res.status(200).json({
+        message: "Logged in",
+        user: user.id
+      });
+    } else {
+      res.status(401).json({
+        message: "You shall not pass!"
+      });
+    }
   } catch (error) {
     next(error);
   }

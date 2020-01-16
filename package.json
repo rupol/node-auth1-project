@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/rupol/node-auth1-project#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "helmet": "^3.21.2",
     "knex": "^0.20.8",

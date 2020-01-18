@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const express = require("express");
+const restricted = require("../middleware/restricted");
 const usersModel = require("../users/users-model");
 
 const router = express.Router();
@@ -20,6 +21,8 @@ router.post("/login", async (req, res, next) => {
     const passwordValid = await bcrypt.compare(password, user.password);
 
     if (user && passwordValid) {
+      req.session.user = user;
+
       res.status(200).json({
         message: "Logged in",
         user: user.id

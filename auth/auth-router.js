@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
-const express = require("express");
 const restricted = require("../middleware/restricted");
+const express = require("express");
 const usersModel = require("../users/users-model");
 
 const router = express.Router();
@@ -35,6 +35,18 @@ router.post("/login", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+router.get("/logout", restricted(), (req, res, next) => {
+  req.session.destroy(err => {
+    if (err) {
+      next(err);
+    } else {
+      res.json({
+        message: "Hasta luego!"
+      });
+    }
+  });
 });
 
 module.exports = router;

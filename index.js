@@ -6,6 +6,7 @@ const KnexSessionStore = require("connect-session-knex")(session);
 const dbConfig = require("./data/db-config");
 const authRouter = require("./auth/auth-router.js");
 const usersRouter = require("./users/users-router.js");
+const restrictedRouter = require("./restricted/restricted-router");
 
 const server = express();
 const port = process.env.PORT || 4000;
@@ -31,6 +32,7 @@ server.use(
 
 server.use("/api", authRouter);
 server.use("/api/users", usersRouter);
+server.use("/api/restricted", restrictedRouter);
 
 server.get("/", (req, res, next) => {
   res.json({
